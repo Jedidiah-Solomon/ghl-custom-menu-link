@@ -1,0 +1,28 @@
+{
+  "name": "custom-menu-link",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "body-parser": "^2.2.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
+    "express-validator": "^7.2.1",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7",
+    "qs": "^6.14.0",
+    "serve-favicon": "^2.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
