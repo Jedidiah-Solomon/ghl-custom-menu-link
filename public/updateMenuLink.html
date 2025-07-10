@@ -204,6 +204,25 @@
 
       <div id="responseMessage" class="response"></div>
     </div>
+    <footer
+      style="margin-top: 40px; font-size: 14px; color: #888; text-align: center"
+    >
+      <p>
+        &copy; <span id="year"></span>
+        <a
+          href="https://www.jedidiahsolomon.name.ng/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Jedidiah Solomon
+        </a>
+      </p>
+      <p>
+        <a href="/home" target="_self" rel="noopener noreferrer">
+          Go To Home
+        </a>
+      </p>
+    </footer>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -291,6 +310,9 @@
           }, 5000);
         }
       });
+    </script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
   </body>
 </html>
