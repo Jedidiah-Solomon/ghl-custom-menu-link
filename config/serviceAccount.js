@@ -43,6 +43,6 @@ const serviceAccount = {
   universe_domain: process.env.SACCT_UNIVERSE_DOMAIN,
 };
 
-console.log("service account is : ", serviceAccount);
+// console.log("service account is : ", serviceAccount);
 
 export default serviceAccount;

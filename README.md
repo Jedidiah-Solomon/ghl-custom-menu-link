@@ -1,171 +1,58 @@
-# Custom Menu Links API
+# 🌟 GHL Custom Menu Link App by Jedidiah Solomon
 
-## Overview
+## 🔍 What is this?
 
-Welcome to the **Custom Menu Links API**! This API allows developers to programmatically manage custom menus, create custom links, and handle menu configurations efficiently.
+This is a simple web tool that helps you add, update, and manage custom menu links inside your GoHighLevel (GHL) dashboard — without writing any code.
 
-### What's New?
+Whether you're an agency owner or just managing a few sub-accounts, this app lets you create quick-access links for your users right from inside GHL.
 
-We've introduced two new scopes for accessing custom menu links:
+## ✨ What Can You Do With It?
 
-- `custom-menu-link.readonly`
-- `custom-menu-link.write`
+➕ Add custom menu links to your GHL dashboard
 
-## API Endpoints
+✏️ Edit or update existing menu items
 
-### 1. Retrieve all custom menus
+🗑️ Delete menus you no longer need
 
-**GET** `/custom-menus`
+🎨 Customize icons and how links open (new tab, iframe, same tab)
 
-- Fetches all custom menus with filtering and pagination options.
-- **Response:** Returns a list of menus.
+👥 Control which user roles or sub-accounts can see each link
 
-```
-{
-    "customMenu": {
-      "id": "12345",
-      "icon": {
-        "name": "yin-yang",
-        "fontFamily": "fab"
-      },
-      "title": "Dashboard",
-      "url": "/dashboard",
-      "order": 1,
-      "showOnCompany": true,
-      "showOnLocation": true,
-      "showToAllLocations": true,
-      "locations": [
-        "gfWreTIHL8pDbggBb7af",
-        "67WreTIHL8pDbggBb7ty"
-      ],
-      "openMode": "iframe",
-      "userRole": "all",
-      "allowCamera": false,
-      "allowMicrophone": false
-    }
-  }
-```
+🔒 Toggle access to camera and microphone if needed
 
-### 2. Get specific menu details
+## 💼 Who is it for?
 
-**GET** `/custom-menus/:customMenuId`
+This tool is made for:
 
-- Retrieves details of a specific menu by its ID.
-- **Response:** Returns menu details.
+GHL Agency Owners
 
-```
-{
-    "customMenus": [
-      {
-        "id": "12345",
-        "icon": {
-          "name": "yin-yang",
-          "fontFamily": "fab"
-        },
-        "title": "Dashboard",
-        "url": "/dashboard",
-        "order": 1,
-        "showOnCompany": true,
-        "showOnLocation": true,
-        "showToAllLocations": true,
-        "locations": [
-          "gfWreTIHL8pDbggBb7af",
-          "67WreTIHL8pDbggBb7ty"
-        ],
-        "openMode": "iframe",
-        "userRole": "all",
-        "allowCamera": false,
-        "allowMicrophone": false
-      }
-    ],
-    "totalLinks": 100
-  }
-```
+SaaS Admins
 
-### 3. Create a new custom menu link
+Marketing Teams using GHL
 
-**POST** `/custom-menus`
+Anyone who wants to make their GHL dashboard more useful
 
-- Allows creation of new custom menu links with icon support.
-- **Request Body:**
-  ```json
-  {
-    "title": "My Awesome Menu",
-    "url": "https://example.com/my-menu",
-    "icon": {
-      "value": {
-        "name": "layer-group",
-        "fontFamily": "fas" //far,fab (only fontawesome free icons are allowed) https://doc.clickup.com/8631005/d/h/87cpx-243696/d60fa70db6b92b2
-      }
-    },
-    "showOnCompany": true,
-    "showOnLocation": true,
-    "showToAllLocations": true,
-    "openMode": "new_tab", //iframe ,new_tab,current_tab
-    "locations": [],
-    "userRole": "all", //all, admin,user
-    "allowCamera": false,
-    "allowMicrophone": false
-  }
-  ```
-  locations:List of sub-account IDs where the menu should be shown. This list is applicable only when showOnLocation is true and showToAllLocations is false
-- **Response:** Returns the created menu.
+## 🚀 How Does It Work?
 
-```
-{
-  "customMenu": {
-    "id": "12345",
-    "icon": {
-      "name": "yin-yang",
-      "fontFamily": "fab"
-    },
-    "title": "Dashboard",
-    "url": "/dashboard",
-    "order": 1,
-    "showOnCompany": true,
-    "showOnLocation": true,
-    "showToAllLocations": true,
-    "locations": [
-      "gfWreTIHL8pDbggBb7af",
-      "67WreTIHL8pDbggBb7ty"
-    ],
-    "openMode": "iframe",
-    "userRole": "all",
-    "allowCamera": false,
-    "allowMicrophone": false
-  }
-}
-```
+Log in to your GHL account
 
-### 4. Update an existing menu
+Connect this tool
 
-**PUT** `/custom-menus/:customMenuId`
+Use the simple interface to manage your menu links
 
-- Updates an existing menu configuration.
-- **Request Body:**
-  ```json
-  {
-    "name": "Updated Menu Name",
-    "icon": "new-icon.png"
-  }
-  ```
-- **Response:** Returns the updated menu details.
+Instantly see the changes in your GHL dashboard
 
-### 5. Delete a custom menu
+## 📖 Need More Details?
 
-**DELETE** `/custom-menus/:customMenuId`
+Click the "View API Documentation" button in the app for full details on how each feature works behind the scenes.
 
-- Removes a specific custom menu.
-- **Response:** Confirms successful deletion.
+## 🔐 Do I Need a Token or API Key?
 
-## Why is this important?
+Yes — you’ll log in via your agency account, and the app handles token generation for you. You just focus on setting up your menus.
 
-Agencies and SaaS businesses catering to multiple industries can now effectively manage custom menus through APIs, saving hours of manual effort.
+## 👨‍💻 Created by
 
-## Authentication
+Jedidiah Solomon |
+Software & GHL Marketplace Developer
 
-- The API requires authentication via an API key or OAuth token.
-- Ensure you pass the authentication headers with each request:
-  ```bash
-  Authorization: Bearer YOUR_ACCESS_TOKEN
-  ```
+© <span>2025</span> Jedidiah Solomon

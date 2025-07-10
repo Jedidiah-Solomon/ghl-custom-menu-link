@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import { validationResult } from "express-validator";
+import { adminFirestore } from "../config/firebase-admin.js";
 
 // Function to generate a random 32-character hexadecimal key
 const generateSecretKey = () => {
@@ -80,10 +81,61 @@ const handleValidationErrors = (req, res, next) => {
   next();
 };
 
+const getCompanyAccessToken = async (companyId) => {
+  if (!companyId || typeof companyId !== "string" || companyId.trim() === "") {
+    throw new Error("Valid company ID is required");
+  }
+
+  try {
+    const docRef = adminFirestore.doc(`companyAccessTokens/${companyId}`);
+    const doc = await docRef.get();
+
+    if (!doc.exists) {
+      throw new Error("No token data found for this company");
+    }
+
+    const tokenData = doc.data();
+    console.log("Token data retrieved:", tokenData);
+
+    const encryptionKey = process.env.JVN_ENCRYPTION_SECRET_KEY;
+
+    if (
+      !tokenData.accessToken ||
+      !tokenData.accessTokenIv ||
+      !tokenData.accessTokenAuthTag
+    ) {
+      throw new Error("Invalid token data structure");
+    }
+
+    const decryptedAccessToken = decryptPaymentKey(
+      {
+        encryptedKey: tokenData.accessToken,
+        iv: tokenData.accessTokenIv,
+        authTag: tokenData.accessTokenAuthTag,
+      },
+      encryptionKey
+    );
+
+    return {
+      accessToken: decryptedAccessToken,
+      companyId: companyId,
+      expiresIn: tokenData.expiresIn,
+      tokenType: tokenData.tokenType,
+    };
+  } catch (error) {
+    console.error(
+      `Error getting access token for company ${companyId}:`,
+      error
+    );
+    throw error;
+  }
+};
+
 export {
   generateSecretKey,
   timeNow,
   encryptPaymentKey,
   decryptPaymentKey,
   handleValidationErrors,
+  getCompanyAccessToken,
 };

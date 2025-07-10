@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GHL Custom Menu Dashboard</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f9f9f9;
+        margin: 0;
+        padding: 40px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      .link-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      a {
+        display: block;
+        padding: 15px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+
+      a:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>GHL Custom Menu Links</h1>
+
+    <div class="link-container">
+      <a href="/createMenuLink">➕ Add Custom Menu Link</a>
+      <a href="/updateMenuLink">✏️ Update Custom Menu Link</a>
+      <a href="/deleteMenu">🗑️ Delete Custom Menu Link</a>
+    </div>
+
+    <footer
+      style="margin-top: 40px; font-size: 14px; color: #888; text-align: center"
+    >
+      <p>
+        &copy; <span id="year"></span>
+        <a
+          href="https://www.jedidiahsolomon.name.ng/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            display: inline;
+            background: none;
+            color: black;
+            padding-left: 0;
+          "
+          >Jedidiah Solomon
+        </a>
+      </p>
+    </footer>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>

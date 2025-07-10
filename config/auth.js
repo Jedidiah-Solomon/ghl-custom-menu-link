@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import axios from "axios";
 import qs from "qs";
+import { encryptPaymentKey } from "../utils/helper.js";
+import { adminFirestore } from "./firebase-admin.js";
 
 dotenv.config({
   path: `.env.${process.env.NODE_ENV || "development"}`,
@@ -69,32 +71,63 @@ async function callback(req, res) {
 
   try {
     const tokenResponse = await axios.request(tokenConfig);
+    const {
+      access_token,
+      refresh_token,
+      token_type,
+      expires_in,
+      companyId,
+      userId,
+      scope,
+      planId,
+    } = tokenResponse.data;
 
-    console.log(
-      "OAuth token exchange completed for locationId:",
-      tokenResponse.data?.locationId || null
+    if (!companyId) {
+      return res
+        .status(400)
+        .json({ error: "CompanyId missing in token response." });
+    }
+
+    const encryptionKey = process.env.JVN_ENCRYPTION_SECRET_KEY;
+    const accessTokenEncryption = encryptPaymentKey(
+      access_token,
+      encryptionKey
     );
-    console.log("Full tokenResponse:", tokenResponse);
-    console.log("tokenResponse.data:", tokenResponse.data);
-    console.log(
-      "tokenResponse.data (JSON):",
-      JSON.stringify(tokenResponse.data, null, 2)
+    const refreshTokenEncryption = encryptPaymentKey(
+      refresh_token,
+      encryptionKey
     );
 
-    res.status(200).json({
-      message: "Callback and token exchange successful. Data not saved.",
-    });
+    // Save company-level access token
+    await adminFirestore
+      .collection("companyAccessTokens")
+      .doc(companyId)
+      .set({
+        companyId,
+        accessToken: accessTokenEncryption.encryptedKey,
+        accessTokenIv: accessTokenEncryption.iv,
+        accessTokenAuthTag: accessTokenEncryption.authTag,
+        refreshToken: refreshTokenEncryption.encryptedKey,
+        refreshTokenIv: refreshTokenEncryption.iv,
+        refreshTokenAuthTag: refreshTokenEncryption.authTag,
+        tokenType: token_type,
+        expiresIn: expires_in,
+        userId: userId || "N/A",
+        planId: planId || "N/A",
+        scope,
+        createdAt: new Date(),
+      });
 
-    console.log("OAuth token exchange successful (data not saved).");
+    console.log(`GHL OAuth data saved for company: ${companyId}`);
+
+    return res.redirect("/home");
   } catch (error) {
-    console.error(" Error details: ", error);
     console.error(
-      " Error during OAuth token exchange:",
-      error.toJSON ? error.toJSON() : error.message
+      "Error during OAuth process:",
+      error.response?.data || error.message
     );
-
     return res.status(500).json({
-      error: "Failed to exchange code for token.",
+      error: "Failed to complete OAuth process.",
     });
   }
 }

@@ -1,7 +1,6 @@
 import express from "express";
 import {
   getCustomMenuById,
-  getCustomMenus,
   createCustomMenu,
   updateCustomMenu,
   deleteCustomMenu,
@@ -10,7 +9,6 @@ import {
 const router = express.Router();
 
 router.get("/:customMenuId", getCustomMenuById);
-router.get("/", getCustomMenus);
 router.post("/", createCustomMenu);
 router.put("/:customMenuId", updateCustomMenu);
 router.delete("/:customMenuId", deleteCustomMenu);

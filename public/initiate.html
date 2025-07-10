@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Menu Link Server</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        background-color: #f5f5f5;
+      }
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        text-align: center;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      p {
+        color: #7f8c8d;
+        margin-bottom: 30px;
+        font-size: 18px;
+      }
+      .btn {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        border: none;
+        cursor: pointer;
+        margin: 10px 5px;
+      }
+      .btn:hover {
+        background-color: #2980b9;
+      }
+      .btn-danger {
+        background-color: #e74c3c;
+      }
+      .btn-danger:hover {
+        background-color: #c0392b;
+      }
+      .features {
+        margin-top: 40px;
+        text-align: left;
+      }
+      .feature {
+        margin-bottom: 15px;
+        padding-left: 20px;
+        position: relative;
+      }
+      .feature:before {
+        content: "✓";
+        color: #2ecc71;
+        position: absolute;
+        left: 0;
+      }
+      .logo {
+        max-width: 150px;
+        margin-bottom: 20px;
+      }
+      .documentation {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 30px;
+        text-align: left;
+      }
+      .payload-info {
+        background: white;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      code {
+        background: #f0f0f0;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: monospace;
+      }
+      .note {
+        background: #fff3cd;
+        padding: 10px;
+        border-left: 4px solid #ffc107;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to our GHL Custom Menu Link App</h1>
+      <p>
+        Connect your account to start managing custom menu links. Login to your
+        agency account now.
+      </p>
+
+      <button id="connectBtn" class="btn">
+        Add a Custom Menu Link To Your GHL Dashboard
+      </button>
+      <button id="viewDocsBtn" class="btn">View API Documentation</button>
+
+      <div class="features">
+        <h3>Features:</h3>
+        <div class="feature">Create custom menu links</div>
+        <div class="feature">Update existing menu items</div>
+        <div class="feature">Delete menu items</div>
+        <div class="feature">Manage icons, permissions and visibility</div>
+        <p>
+          Access your most visited websites and links from GHL Dashboard with
+          ease.
+        </p>
+      </div>
+
+      <div class="documentation" id="documentation" style="display: none">
+        <h2>API Documentation</h2>
+
+        <h3>Menu Item Payload Structure</h3>
+        <div class="payload-info">
+          <p>
+            <strong>Required fields:</strong> <code>companyId</code>,
+            <code>title</code>, <code>url</code>, <code>openMode</code>,
+            <code>userRole</code>
+          </p>
+          <pre>
+{
+  "companyId": "your-company-id",
+  "title": "My Custom Link",
+  "url": "https://example.com",
+  "icon": {
+    "name": "example-icon",
+    "fontFamily": "fas"
+  },
+  "openMode": "iframe",
+  "userRole": "admin",
+  "allowCamera": false,
+  "allowMicrophone": false,
+  "locations": ["location1", "location2"]
+}</pre
+          >
+        </div>
+
+        <h3>Font Awesome Icons</h3>
+        <div class="note">
+          <p>We support Font Awesome icons with the following font families:</p>
+          <ul>
+            <li>
+              <code>fas</code> - Solid icons (recommended for best visibility)
+            </li>
+            <li><code>far</code> - Regular icons</li>
+            <li><code>fab</code> - Brand icons</li>
+          </ul>
+          <p>
+            Find available icons at:
+            <a href="https://fontawesome.com/icons" target="_blank"
+              >Font Awesome</a
+            >
+          </p>
+        </div>
+
+        <h3>URL Requirements</h3>
+        <div class="payload-info">
+          <ul>
+            <li>
+              Must be a valid URL starting with <code>http://</code> or
+              <code>https://</code>
+            </li>
+            <li>
+              For iframe mode, ensure the URL allows embedding (no
+              X-Frame-Options restrictions)
+            </li>
+            <li>Maximum length: 2048 characters</li>
+          </ul>
+        </div>
+
+        <h3>Open Mode Options</h3>
+        <div class="payload-info">
+          <ul>
+            <li><code>iframe</code> - Opens within GHL dashboard (default)</li>
+            <li><code>new_tab</code> - Opens in a new browser tab</li>
+            <li><code>same_tab</code> - Opens in the current tab</li>
+          </ul>
+        </div>
+
+        <h3>User Role Options</h3>
+        <div class="payload-info">
+          <ul>
+            <li><code>all</code> - Visible to all users</li>
+            <li><code>admin</code> - Only visible to admins</li>
+            <li><code>user</code> - Visible to standard users</li>
+          </ul>
+        </div>
+
+        <h3>Delete Endpoint</h3>
+        <div class="payload-info">
+          <p>To delete a menu item, send a DELETE request with:</p>
+          <pre>
+DELETE /custom-menus/{menuId}
+{
+  "companyId": "your-company-id"
+}</pre
+          >
+          <p>Successful response:</p>
+          <pre>
+{
+  "success": true,
+  "message": "Custom menu successfully deleted",
+  "deletedMenuId": "12345abcde",
+  "deletedAt": "2023-09-12T15:30:45.123Z"
+}</pre
+          >
+        </div>
+
+        <button id="hideDocsBtn" class="btn btn-danger">
+          Hide Documentation
+        </button>
+      </div>
+    </div>
+    <footer
+      style="margin-top: 40px; font-size: 14px; color: #888; text-align: center"
+    >
+      <p>
+        &copy; <span id="year"></span>
+        <a
+          href="https://www.jedidiahsolomon.name.ng/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Jedidiah Solomon
+        </a>
+      </p>
+    </footer>
+
+    <script>
+      document
+        .getElementById("connectBtn")
+        .addEventListener("click", function () {
+          window.location.href = "/auth/initiate";
+        });
+
+      document
+        .getElementById("viewDocsBtn")
+        .addEventListener("click", function () {
+          document.getElementById("documentation").style.display = "block";
+        });
+
+      document
+        .getElementById("hideDocsBtn")
+        .addEventListener("click", function () {
+          document.getElementById("documentation").style.display = "none";
+        });
+    </script>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
