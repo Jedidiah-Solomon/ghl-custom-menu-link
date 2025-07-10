@@ -4,9 +4,7 @@ import qs from "qs";
 import { encryptPaymentKey } from "../utils/helper.js";
 import { adminFirestore } from "./firebase-admin.js";
 
-dotenv.config({
-  path: `.env.${process.env.NODE_ENV || "development"}`,
-});
+dotenv.config();
 
 /**
  * Step 1: Initiate GHL OAuth Flow
