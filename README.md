@@ -55,4 +55,15 @@ Yes — you’ll log in via your agency account, and the app handles token gener
 Jedidiah Solomon |
 Software & GHL Marketplace Developer
 
+## To use this codebase in your server
+
+1. Clone the repo `https://github.com/Jedidiah-Solomon/ghl-custom-menu-link.git`
+2. Create a firebase account and start firestore, then get the service account and fill up the .env file, check the `.env.sample` for the required variables.
+3. Add the code to your server and run `npm start`.
+4. Done
+
+Note: Feel free to modify the environmental variables to suit your style or taste. Also in `/services/alpha-job.js` is a cron job scheduled in China time to delete tokens of any agency who use this app to ad custom menu links.
+
+### To support my work, kindly go to https://www.jedidiahsolomon.name.ng
+
 © <span>2025</span> Jedidiah Solomon

@@ -6,6 +6,7 @@ import favicon from "serve-favicon";
 import { fileURLToPath } from "url";
 import { initiate, callback } from "./config/auth.js";
 import customMenuRoutes from "./routes/customMenuRoutes.js";
+import { startCompanyCleanupCronJob } from "./services/alpha-job.js";
 
 dotenv.config();
 
@@ -27,6 +28,8 @@ app.use("/auth/initiate", initiate);
 app.use("/auth/callback", callback);
 
 app.use("/custom-menus", customMenuRoutes);
+
+startCompanyCleanupCronJob();
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "initiate.html"));
